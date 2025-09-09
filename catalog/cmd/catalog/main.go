@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/kelseyhightower/envconfig"
-	"github.com/sunil8777/E-commerce-microservices/account"
+	"github.com/sunil8777/E-commerce-microservices/catalog"
 	"github.com/sunil8777/E-commerce-microservices/retry"
 )
 
@@ -19,10 +19,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var r account.Repository
+	var r catalog.Repository
 
 	retry.ForeverSleep(func() error {
-		r, err = account.NewPostgresRepository(cfg.DatabaseURL)
+		r, err = catalog.NewElasticRepository(cfg.DatabaseURL)
 		if err != nil {
 			log.Println(err)
 		}
@@ -31,7 +31,6 @@ func main() {
 
 	defer r.Close()
 	log.Println("listening on port 8080")
-	s := account.NewService(r)
-	log.Fatal(account.ListenGRPC(s, 8080))
-
+	s := catalog.NewService(r)
+	log.Fatal(catalog.ListenGRPC(s, 8080))
 }
