@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/sunil8777/E-commerce-microservices/account"
+	"github.com/sunil8777/E-commerce-microservices/graphql/model"
 	"github.com/sunil8777/E-commerce-microservices/order"
 )
 
@@ -13,7 +13,7 @@ type accountResolver struct {
 	server *Server
 }
 
-func (r *accountResolver)  Orders(ctx context.Context, obj *account.Account) ([]*order.Order, error) {
+func (r *accountResolver) Orders(ctx context.Context, obj *model.Account) ([]*order.Order, error) {
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -39,7 +39,7 @@ func (r *accountResolver)  Orders(ctx context.Context, obj *account.Account) ([]
 			ID:         o.ID,
 			CreatedAt:  o.CreatedAt,
 			TotalPrice: o.TotalPrice,
-			Products: products,
+			Products:   products,
 		})
 	}
 
