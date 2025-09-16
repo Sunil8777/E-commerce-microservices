@@ -43,5 +43,5 @@ cd E-commerce-microservices
 2. **Start docker**
 ```bash
 
-docker-compose up --build
+docker compose up --build
 
